@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    <title>Battle of Heroes!</title>
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Battle of Heroes!!</h1>
+        <p class="lead">Will you be the champion of this grand event?</p>
+        <p class="lead">Select your hero and battle your way to victory!</p>
+    </div>
+    </div>
+    <div class="container">
+        <div class="row fight-row justify-content-between">
+            <div class="col-md-3">
+                <div class="row bg-secondary hero-row">
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center bg-info">
+                    <h2 id="score"></h2>
+                    <h3 id="wins"></h3>
+                    <h4 id="num-wins"></h4>
+                    <h3 id="losses"></h3>
+                    <h4 id="num-losses"></h4>
+                    <div class="fight-button"></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row bg-secondary opponent-row">
+                    
+                </div>
+            </div>      
+        </div>
+
+        <div class="row bg-secondary store-row">
+            <div class="col-md-3 hero">
+                    <div class="card w-100 h-100" id="dwarf" style="width: 18rem;">
+                        <img src="assets/images/dwarf-warrior.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Placeholder</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-3 hero">
+                    <div class="card w-100 h-100" id="goblin" style="width: 18rem;">
+                        <img src="assets/images/goblin-band.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Placeholder</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-3 hero">
+                    <div class="card w-100 h-100" id="human" style="width: 18rem;">
+                        <img src="assets/images/human-knight.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Placeholder</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-3 hero">
+                    <div class="card w-100 h-100" id="orc" style="width: 18rem;">
+                        <img src="assets/images/orc-warrior.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Placeholder</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<script src="assets/javascript/game.js"></script>
+
+</body>
+</html>
