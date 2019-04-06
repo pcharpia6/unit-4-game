@@ -1,5 +1,18 @@
 # unit-4-game
 
+
+Instructions
+1. Select a character from the list.
+    This is your character for the remainder of the game.
+2. Choose your first opponent.
+3. Your hero and opponent will move to the battle arena.
+4. Click the battle button to engage your opponent for a single round.
+    Your hero will attack the opponent, and if the opponent survives it will counterattack.
+    If your hero dies, the game is over and you lose.
+    If your opponent dies, you select the next opponent to battle.
+    If all 3 opponents are defeated, you win.
+
+
 Psuedo-code
 
 When the game initializes there must be 4 heroes available to select.
