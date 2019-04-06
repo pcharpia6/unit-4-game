@@ -1,26 +1,23 @@
 var hero = {
-    "dwarf" : {
-        health: 320,
-        attack: 10,
-        counter: 15,
-    },
-    
-    "goblin" : {
-        health: 300,
+    "Dwarf" : {
+        health: 120,
         attack: 8,
         counter: 15,
     },
-
-    "human" : {
-        health: 240,
-        attack: 15,
-        counter: 15,
+    "Goblin" : {
+        health: 120,
+        attack: 13,
+        counter: 5,
     },
-
-    "orc" : {
-        health: 280,
-        attack: 12,
+    "Human" : {
+        health: 170,
+        attack: 5,
         counter: 20,
+    },
+    "Orc" : {
+        health: 150,
+        attack: 6,
+        counter: 25,
     }
 }
 var heroChoice = "";
@@ -32,93 +29,105 @@ var opponentDead = false;
 var mkButton = false;
 var wins = 0;
 var losses = 0;
-var attack1 = 0;
+// var attack1 = 0;
 var attack2 = 0;
-var clicked = false;
 var opponentsRemaining = 3;
-
-
-
+var audioElement = document.createElement("audio");
 
 function endGameWin() {
-    console.log("endgamewin")
+    console.log("endgamewin");
+    audioElement.setAttribute("src", "assets/sounds/win.mp3");
+    audioElement.play();
 }
 
 function endGameLose() {
-    console.log("endgamelose")
+    console.log("endgamelose");
+    audioElement.setAttribute("src", "assets/sounds/lose.mp3");
+    audioElement.play();
 }
 
 function battle() {
-    clicked = false;
+    audioElement.setAttribute("src", "assets/sounds/Sword1.mp3");
+    audioElement.play();
     if (!opponentDead && !heroDead) {
-        attack1 = hero[heroChoice].attack;
+        var attack1 = hero[heroChoice].attack;
         attack2 += attack1;
         (hero[opponentChoice].health -= attack2);
-        console.log(attack2);
-        console.log(opponentChoice);
+        $("#hero-damage").text(heroChoice + " hits " + opponentChoice + " for " + attack2 + " damage!");
         if (hero[opponentChoice].health <= 0) {
+            $("#dies").text(opponentChoice + " is defeated!");
             opponentDead = true;
             opponentSelected = false;
-            console.log("opponentdead")
             $("div[unit=" + opponentChoice + "]").remove();
             opponentsRemaining--;
             if (opponentsRemaining > 0) {
-                selectOpponent();}
-            else { endGameWin() }
+                $(".store-row").removeClass("hidden");
+                $(".fight-row").addClass("hidden");
+                selectOpponent();
+                return;
             }
-
+            else { 
+                endGameWin();
+                return;}
+            }
         (hero[heroChoice].health -= hero[opponentChoice].counter);
+        $("#opponent-damage").text(opponentChoice + " hits " + heroChoice + " for " + hero[opponentChoice].counter + " damage!");
         if (hero[heroChoice].health <= 0) {
             heroDead = true;
             console.log("herodead")
             endGameLose();}
         }
+    //update visible hero stats
     $(".hero-row").find(".card-text").html("Health: " + hero[heroChoice].health + "<p>");
     $(".opponent-row").find(".card-text").html("Health: " + hero[opponentChoice].health + "<p>");
 }
-
+//push opponent health to opponent card
 function opponentRow() {
-    opponentChoice = $(".opponent-row").children().attr("unit");
-    $(".opponent-row").find(".card-text").html("Health: " + hero[opponentChoice].health + "<p>");
     console.log(opponentChoice);
+    $(".opponent-row").find(".card-text").html("Health: " + hero[opponentChoice].health + "<p>");
 }
-
+//push hero-health to hero card
 function heroRow() {
-    heroChoice = $(".hero-row").children().attr("unit");
-    $(".hero-row").find(".card-text").html("Health: " + hero[heroChoice].health + "<p>");
     console.log(heroChoice);
+    $(".hero-row").find(".card-text").html("Health: " + hero[heroChoice].health + "<p>");
 }
 
 function fightOpponent () {
+    $("#store-text").text("Waiting...");
+    $("#dies").text("");
     console.log("fightopponent");
     $("#fight-btn").click(function() {
-        if (!opponentDead && !heroDead && !clicked) {
-            clicked = true;
+        if (!opponentDead && !heroDead) {
             battle();
     }})
-        if (opponentDead || heroDead && !clicked) {
-            clicked = true;
-            console.log("isdead")
-            $("#message").html("<p>Choose your next victim!<p>")
-        }
+        // if (opponentDead) {
+        //     console.log("isdead")
+        //     $("#message").text("<p>Choose your next victim!<p>")
+        // }
 }
 
 function makeButton () {
-    $(".fight-button").append('<button type="button" class="btn btn-dark" id="fight-btn">Fight!</button>');
+    $(".fight-button").append('<button type="button" class="btn btn-dark btn-lg" id="fight-btn">Fight!</button>');
     mkButton = true;
 }
 
 function selectOpponent() {
-    $("#dwarf").click(function() { 
+    $("#store-text").text("Choose your Opponent!");
+    $("#Dwarf").click(function() { 
         if (!opponentSelected) {
-            $(this).addClass("bg-danger");
+            audioElement.setAttribute("src", "assets/sounds/dwarf-start.mp3");
+            audioElement.play();
+            populateOpponentRow();
             $(this).appendTo(".opponent-row");
+            $("#" + heroChoice).appendTo(".hero-row");
             $(".card").off("click");
-            $(this).removeAttr("id");
+            opponentChoice = $(this).attr("id");
             opponentSelected = true;
             opponentDead = false;
             console.log("opponentselected: " + opponentSelected);
             $("#fight-btn").off("click");
+            $(".store-row").addClass("hidden");
+            $(".fight-row").removeClass("hidden");
             if (!mkButton) {
                 makeButton();
             }
@@ -128,16 +137,21 @@ function selectOpponent() {
         }
         
     });
-    $("#goblin").click(function() { 
+    $("#Goblin").click(function() { 
         if (!opponentSelected) {
-            $(this).addClass("bg-danger");
+            audioElement.setAttribute("src", "assets/sounds/laugh.mp3");
+            audioElement.play();
+            populateOpponentRow();
             $(this).appendTo(".opponent-row");
+            $("#" + heroChoice).appendTo(".hero-row");
             $(".card").off("click");
-            $(this).removeAttr("id");
+            opponentChoice = $(this).attr("id");
             opponentSelected = true;
             opponentDead = false;
             console.log("opponentselected: " + opponentSelected);
             $("#fight-btn").off("click");
+            $(".store-row").addClass("hidden");
+            $(".fight-row").removeClass("hidden");
             if (!mkButton) {
                 makeButton();
             }
@@ -147,16 +161,21 @@ function selectOpponent() {
         }
         
     });
-    $("#human").click(function() { 
+    $("#Human").click(function() { 
         if (!opponentSelected) {
-            $(this).addClass("bg-danger");
+            audioElement.setAttribute("src", "assets/sounds/human-start.mp3");
+            audioElement.play();
+            populateOpponentRow();
             $(this).appendTo(".opponent-row");
+            $("#" + heroChoice).appendTo(".hero-row");
             $(".card").off("click");
-            $(this).removeAttr("id");
+            opponentChoice = $(this).attr("id");
             opponentSelected = true;
             opponentDead = false;
             console.log("opponentselected: " + opponentSelected);
             $("#fight-btn").off("click");
+            $(".store-row").addClass("hidden");
+            $(".fight-row").removeClass("hidden");
             if (!mkButton) {
                 makeButton();
             }
@@ -166,16 +185,21 @@ function selectOpponent() {
         }
         
     });
-    $("#orc").click(function() { 
+    $("#Orc").click(function() { 
         if (!opponentSelected) {
-            $(this).addClass("bg-danger");
+            audioElement.setAttribute("src", "assets/sounds/orc-start.mp3");
+            audioElement.play();
+            populateOpponentRow();
             $(this).appendTo(".opponent-row");
+            $("#" + heroChoice).appendTo(".hero-row");
             $(".card").off("click");
-            $(this).removeAttr("id");
+            opponentChoice = $(this).attr("id");
             opponentSelected = true;
             opponentDead = false;
             console.log("opponentselected: " + opponentSelected);
             $("#fight-btn").off("click");
+            $(".store-row").addClass("hidden");
+            $(".fight-row").removeClass("hidden");
             if (!mkButton) {
                 makeButton();
             }
@@ -189,51 +213,61 @@ function selectOpponent() {
     
 }
 
+function populateHeroRow() {
+    $(".hero-row").html("<h2>Hero</h2><br>")
+}
+
+function populateOpponentRow() {
+    $(".opponent-row").html("<h2>Opponent</h2><br>")
+}
+
 function selectHero() {
-    
-        $("#dwarf").click(function() {
-            if (!heroSelected) {
-                $(this).addClass("bg-success");
-                $(this).appendTo(".hero-row");
-                $(".card").off("click");
-                $(this).removeAttr("id");
-                heroSelected = true;
-                console.log("heroselected: " + heroSelected);
-                selectOpponent();}      
-        });
-        $("#goblin").click(function() {
-            if (!heroSelected) {
-                $(this).addClass("bg-success");
-                $(this).appendTo(".hero-row");
-                $(".card").off("click");
-                $(this).removeAttr("id");
-                heroSelected = true;
-                console.log("heroselected: " + heroSelected);
-                selectOpponent();}      
-        });
-        $("#human").click(function() {
-            if (!heroSelected) {
-                $(this).addClass("bg-success");
-                $(this).appendTo(".hero-row");
-                $(".card").off("click");
-                $(this).removeAttr("id");
-                heroSelected = true;
-                console.log("heroselected: " + heroSelected);
-                selectOpponent();}      
-        });
-        $("#orc").click(function() {
-            if (!heroSelected) {
-                $(this).addClass("bg-success");
-                $(this).appendTo(".hero-row");
-                $(".card").off("click");
-                $(this).removeAttr("id");
-                heroSelected = true;
-                console.log("heroselected: " + heroSelected);
-                selectOpponent();}      
-        });
+    $("#store-text").text("Choose your Hero!");    
+    $("#Dwarf").click(function() {
+        if (!heroSelected) {
+            audioElement.setAttribute("src", "assets/sounds/dwarf-start.mp3");
+            audioElement.play();
+            populateHeroRow();
+            $(".card").off("click");
+            heroChoice = $(this).attr("id");
+            heroSelected = true;
+            console.log("heroselected: " + heroSelected);
+            selectOpponent();}      
+    });
+    $("#Goblin").click(function() {
+        if (!heroSelected) {
+            audioElement.setAttribute("src", "assets/sounds/laugh.mp3");
+            audioElement.play();
+            populateHeroRow();
+            $(".card").off("click");
+            heroChoice = $(this).attr("id");
+            heroSelected = true;
+            console.log("heroselected: " + heroSelected);
+            selectOpponent();}      
+    });
+    $("#Human").click(function() {
+        if (!heroSelected) {
+            audioElement.setAttribute("src", "assets/sounds/human-start.mp3");
+            audioElement.play();
+            populateHeroRow();
+            $(".card").off("click");
+            heroChoice = $(this).attr("id");
+            heroSelected = true;
+            console.log("heroselected: " + heroSelected);
+            selectOpponent();}      
+    });
+    $("#Orc").click(function() {
+        if (!heroSelected) {
+            audioElement.setAttribute("src", "assets/sounds/orc-start.mp3");
+            audioElement.play();
+            populateHeroRow();
+            $(".card").off("click");
+            heroChoice = $(this).attr("id");
+            heroSelected = true;
+            console.log("heroselected: " + heroSelected);
+            selectOpponent();}      
+    });
         
     }
-    // 
-// }
 
 selectHero();

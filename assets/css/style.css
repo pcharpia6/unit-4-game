@@ -1,12 +1,43 @@
+body {
+    font-family: "Germania One";
+    background-size: 100%;
+    color: white;
+    background: url("../images/wallpaper.jpg");
+    background-repeat: no-repeat;
+}
+
 .card-img-top {
     height: 208px;
 }
 
+#title {
+    max-width: 980px;
+}
+
+.jumbotron{
+    margin: 0px;
+    padding: 2rem 1rem;
+    background: transparent;
+}
+
+.store-row {
+    background: transparent;
+}
 
 .card {
     padding: 15px;
+    background: transparent;
+    border: 0px;
 }
 
 .row {
     padding: 15px;
+}
+
+img {
+    background: transparent;
+}
+
+.hidden{
+    display: none;
 }
