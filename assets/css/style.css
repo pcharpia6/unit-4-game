@@ -16,7 +16,7 @@ body {
 
 .jumbotron{
     margin: 0px;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     background: transparent;
 }
 
@@ -30,14 +30,23 @@ body {
     border: 0px;
 }
 
-.row {
+/* .row {
     padding: 15px;
-}
+} */
 
 img {
     background: transparent;
 }
 
+#win-condition{
+    margin: auto;
+}
+
 .hidden{
     display: none;
+}
+
+.end-game{
+    display: block;
+    margin:auto;
 }

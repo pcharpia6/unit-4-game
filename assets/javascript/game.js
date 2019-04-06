@@ -38,12 +38,18 @@ function endGameWin() {
     console.log("endgamewin");
     audioElement.setAttribute("src", "assets/sounds/win.mp3");
     audioElement.play();
+    $(".jumbotron").addClass("hidden");
+    $(".container").addClass("hidden"); 
+    $("#win-condition").removeClass("hidden");                       
 }
 
 function endGameLose() {
     console.log("endgamelose");
     audioElement.setAttribute("src", "assets/sounds/lose.mp3");
     audioElement.play();
+    $(".jumbotron").addClass("hidden");
+    $(".container").addClass("hidden"); 
+    $("#lose-condition").removeClass("hidden");
 }
 
 function battle() {
@@ -100,10 +106,6 @@ function fightOpponent () {
         if (!opponentDead && !heroDead) {
             battle();
     }})
-        // if (opponentDead) {
-        //     console.log("isdead")
-        //     $("#message").text("<p>Choose your next victim!<p>")
-        // }
 }
 
 function makeButton () {
@@ -114,7 +116,7 @@ function makeButton () {
 function selectOpponent() {
     $("#store-text").text("Choose your Opponent!");
     $("#Dwarf").click(function() { 
-        if (!opponentSelected) {
+        if (!opponentSelected && heroChoice!=="Dwarf") {
             audioElement.setAttribute("src", "assets/sounds/dwarf-start.mp3");
             audioElement.play();
             populateOpponentRow();
@@ -138,7 +140,7 @@ function selectOpponent() {
         
     });
     $("#Goblin").click(function() { 
-        if (!opponentSelected) {
+        if (!opponentSelected && heroChoice!=="Goblin") {
             audioElement.setAttribute("src", "assets/sounds/laugh.mp3");
             audioElement.play();
             populateOpponentRow();
@@ -162,7 +164,7 @@ function selectOpponent() {
         
     });
     $("#Human").click(function() { 
-        if (!opponentSelected) {
+        if (!opponentSelected && heroChoice!=="Human") {
             audioElement.setAttribute("src", "assets/sounds/human-start.mp3");
             audioElement.play();
             populateOpponentRow();
@@ -186,7 +188,7 @@ function selectOpponent() {
         
     });
     $("#Orc").click(function() { 
-        if (!opponentSelected) {
+        if (!opponentSelected && heroChoice!=="Orc") {
             audioElement.setAttribute("src", "assets/sounds/orc-start.mp3");
             audioElement.play();
             populateOpponentRow();
@@ -223,46 +225,50 @@ function populateOpponentRow() {
 
 function selectHero() {
     $("#store-text").text("Choose your Hero!");    
-    $("#Dwarf").click(function() {
+    $("div[unit='Dwarf']").click(function() {
         if (!heroSelected) {
             audioElement.setAttribute("src", "assets/sounds/dwarf-start.mp3");
             audioElement.play();
             populateHeroRow();
             $(".card").off("click");
             heroChoice = $(this).attr("id");
+            $(this).removeAttr("unit");
             heroSelected = true;
             console.log("heroselected: " + heroSelected);
             selectOpponent();}      
     });
-    $("#Goblin").click(function() {
+    $("div[unit='Goblin']").click(function() {
         if (!heroSelected) {
             audioElement.setAttribute("src", "assets/sounds/laugh.mp3");
             audioElement.play();
             populateHeroRow();
             $(".card").off("click");
             heroChoice = $(this).attr("id");
+            $(this).removeAttr("unit");
             heroSelected = true;
             console.log("heroselected: " + heroSelected);
             selectOpponent();}      
     });
-    $("#Human").click(function() {
+    $("div[unit='Human']").click(function() {
         if (!heroSelected) {
             audioElement.setAttribute("src", "assets/sounds/human-start.mp3");
             audioElement.play();
             populateHeroRow();
             $(".card").off("click");
             heroChoice = $(this).attr("id");
+            $(this).removeAttr("unit");
             heroSelected = true;
             console.log("heroselected: " + heroSelected);
             selectOpponent();}      
     });
-    $("#Orc").click(function() {
+    $("div[unit='Orc']").click(function() {
         if (!heroSelected) {
             audioElement.setAttribute("src", "assets/sounds/orc-start.mp3");
             audioElement.play();
             populateHeroRow();
             $(".card").off("click");
             heroChoice = $(this).attr("id");
+            $(this).removeAttr("unit");
             heroSelected = true;
             console.log("heroselected: " + heroSelected);
             selectOpponent();}      
